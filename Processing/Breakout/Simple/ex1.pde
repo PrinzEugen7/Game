@@ -1,34 +1,35 @@
 // ブロックのパラメータ
 int blocks_row = 10;  // ブロックの行数
 int blocks_col = 11;  // ブロックの列数
-DrawBlock[] block = new DrawBlock[blocks_row * blocks_col];
-int[] blockX = new int[blocks_row * blocks_col];
-int[] blockY = new int[blocks_row * blocks_col];
+int[] blockX = new int[blocks_row * blocks_col];  // ブロックのx座標格納用の配列
+int[] blockY = new int[blocks_row * blocks_col];  // ブロックのy座標格納用の配列
 color[] blockColor = new int[blocks_row * blocks_col];
-int first_block_x = 10;
-int first_block_y = 10;
-int block_width = 33;
-int block_height = 20;
-int block_interval_x = 35;
-int block_interval_y = 20;
-color block_color = color(10,150,10);
+int first_block_x = 10;    // 最初のブロックのx座標
+int first_block_y = 10;    // 最初のブロックのy座標
+int block_width = 33;      // ブロックの幅
+int block_height = 20;     // ブロックの高さ
+int block_interval_x = 35; // ブロックの間隔(x方向)
+int block_interval_y = 20; // ブロックの間隔(y方向)
+color block_color = color(10,150,10); // ブロックの色
+DrawBlock[] block = new DrawBlock[blocks_row * blocks_col]; // ブロック描画用オブジェクトの宣言
 
 // バーのパラメータ
-int bar_width = 60;
-int bar_height = 15;
-int bar_x = 200;
-int bar_y = 470;
-color bar_color = color(200, 0, 200);
+int bar_width = 60; // バーの幅
+int bar_height = 15;// バーの高さ
+int bar_x = 200;    // バーのx座標
+int bar_y = 470;    // バーのy座標
+color bar_color = color(200, 0, 200); // バーの色
 
 // ボールのパラメータ
-float ball_dia = 12;
-float ball_x = bar_x + bar_width/2;
-float ball_y = bar_y - ball_dia/2;
+float ball_dia = 12;                 // ボールの直径
+float ball_x = bar_x + bar_width/2;  // ボールのx座標
+float ball_y = bar_y - ball_dia/2;   // ボールのy座標
+float vx = random(random(-3, -3),random(3, 3)); // ボールの速さ(x方向)
+float vy = -3.5;                                // ボールの速さ(y方向)
 
-boolean start_click = false;
-float vx = random(random(-3, -3),random(3, 3));
-float vy = -3.5;
-color back_color = color(0, 20, 0);  // 背景色
+// その他
+color back_color = color(0, 20, 0); // 背景色
+boolean start_click = false;        // クリック判定  
 
 // ブロック描画用クラス
 class DrawBlock{
@@ -109,7 +110,7 @@ void draw(){
   if(ball_x > bar_x-5 && ball_x < bar_x + bar_width + 5){
     if(ball_y > bar_y && ball_y < bar_y + 6){
       vx += random(-0.5,0.5);
-      vy *= -1;
+      vy *= -1.01;
     }
   }
   
