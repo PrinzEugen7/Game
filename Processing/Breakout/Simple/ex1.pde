@@ -77,7 +77,7 @@ void draw(){
   rect(bar_x, bar_y, bar_width, bar_height);
   bar_x = mouseX - bar_width/2;
   
-  // ボールがエリア外にある場合の処理
+  // バーが画面外にある場合の処理
   if(bar_x > width - bar_width){
     bar_x = width - bar_width;
   }
@@ -88,7 +88,7 @@ void draw(){
   // ボールの描画
   fill(220, 200, 200);
   ellipse(ball_x, ball_y, ball_dia, ball_dia);
-  // クリックがあればボール移動開始
+  // ボールの移動(速度分)
   if(start_click){
     ball_x += vx;
     ball_y += vy;
@@ -101,7 +101,7 @@ void draw(){
   if( ball_y < 0){
     vy *= -1;
   }
-  
+  // ボールがバーより下ならゲームオーバー
   if( ball_y > height){
     text("Game Over", width/2 , height/2);
   }
