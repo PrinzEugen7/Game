@@ -7,7 +7,7 @@ SCREEN = Rect(0, 0, 400, 400)
 
 # スプライトのクラス
 class Sprite(pygame.sprite.Sprite):
-    # 画像ファイル名, 位置x, 位置y, x方向の速さ, y方向の速さ
+    # スプライトを作成(画像ファイル名, 位置(x, y), 速さ(vx, vy), 回転angle)
     def __init__(self, filename, (x, y), (vx, vy), angle=0):
         pygame.sprite.Sprite.__init__(self)
         self.img = pygame.image.load(filename).convert_alpha()
