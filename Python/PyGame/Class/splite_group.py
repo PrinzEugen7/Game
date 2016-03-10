@@ -61,7 +61,7 @@ def main():
         # 画面更新
         pygame.display.update(dirty_rects)
         # イベント処理
-        for event in pygame.event.get(dirty_rects):
+        for event in pygame.event.get():
             # 終了用のイベント処理
             if event.type == QUIT:          # 閉じるボタンが押されたとき
                 pygame.quit()
