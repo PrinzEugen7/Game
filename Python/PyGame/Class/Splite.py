@@ -28,34 +28,41 @@ class Sprite(pygame.sprite.Sprite):
         self.rect = self.rect.clamp(SCREEN)
 
     def draw(self, screen):
-        screen.blit(self.image, self.rect)
+        screen.blit(self.img, self.rect)
 
+# メイン
 def main():
     pygame.init()
     screen = pygame.display.set_mode(SCREEN.size)
-    # スプライトを作成
-    player = Sprite("player.png", 10, 10, 5, 5)
-    enemy1 = Sprite("enemy1.jpg", 0, 0, 2, 2)
-    enemy2 = Sprite("enemy2.jpg", 0, 0, 2, 2)
+    # スプライトを作成(画像ファイル名, 位置x, 位置y, x方向の速さ, y方向の速さ)
+    player = Sprite("player.png", 200, 200, 2, 0)
+    enemy1 = Sprite("enemy1.png", 200, 200, 0, 2)
+    enemy2 = Sprite("enemy2.png", 200, 200, 2, 2)
     clock = pygame.time.Clock()
 
     while (1):
         clock.tick(30)  # フレームレート(30fps)
-        screen.fill((0,0,255))
+        screen.fill((0, 20, 0, 0)) # 画面の背景色
         # スプライトを更新
-        python1.update()
-        python2.update()
-        python3.update()
+        player.update()
+        enemy1.update()
+        enemy2.update()
         # スプライトを描画
-        python1.draw(screen)
-        python2.draw(screen)
-        python3.draw(screen)
+        player.draw(screen)
+        enemy1.draw(screen)
+        enemy2.draw(screen)
         # 画面更新
         pygame.display.update()
-
+        # イベント処理
         for event in pygame.event.get():
-            if event.type == QUIT:
+            # 終了用のイベント処理
+            if event.type == QUIT:          # 閉じるボタンが押されたとき
+                pygame.quit()
                 sys.exit()
+            if event.type == KEYDOWN:       # キーを押したとき
+                if event.key == K_ESCAPE:   # Escキーが押されたとき
+                    pygame.quit()
+                    sys.exit()
 
 if __name__ == "__main__":
     main()
