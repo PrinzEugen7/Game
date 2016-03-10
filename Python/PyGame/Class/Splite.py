@@ -8,14 +8,16 @@ SCREEN = Rect(0, 0, 400, 400)
 # スプライトのクラス
 class Sprite(pygame.sprite.Sprite):
     # 画像ファイル名, 位置x, 位置y, x方向の速さ, y方向の速さ
-    def __init__(self, filename, x, y, vx, vy):
+    def __init__(self, filename, (x, y), (vx, vy), angle=0):
         pygame.sprite.Sprite.__init__(self)
         self.img = pygame.image.load(filename).convert_alpha()
+        if angle != 0: self.img = pygame.transform.rotate(self.img, angle)
         w = self.img.get_width()
         h = self.img.get_height()
         self.rect = Rect(x, y, w, h)
         self.vx = vx
         self.vy = vy
+        self.angle = angle
 
     def update(self):
         self.rect.move_ip(self.vx, self.vy)
@@ -34,10 +36,10 @@ class Sprite(pygame.sprite.Sprite):
 def main():
     pygame.init()
     screen = pygame.display.set_mode(SCREEN.size)
-    # スプライトを作成(画像ファイル名, 位置x, 位置y, x方向の速さ, y方向の速さ)
-    player = Sprite("player.png", 200, 200, 2, 0)
-    enemy1 = Sprite("enemy1.png", 200, 200, 0, 2)
-    enemy2 = Sprite("enemy2.png", 200, 200, 2, 2)
+    # スプライトを作成(画像ファイル名, 位置(x, y), 速さ(vx, vy), 回転angle)
+    player = Sprite("player.png", (200, 200), (2, 0), 0)
+    enemy1 = Sprite("enemy1.png", (200, 200), (0, 2), 0)
+    enemy2 = Sprite("enemy2.png", (200, 200), (2, 2), 10)
     clock = pygame.time.Clock()
 
     while (1):
