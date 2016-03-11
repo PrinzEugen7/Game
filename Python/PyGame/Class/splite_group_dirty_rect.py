@@ -46,7 +46,7 @@ def main():
     clock = pygame.time.Clock()
     # 背景の作成と描画（背景は最初に1回だけ描画）
     bg = pygame.Surface(SCREEN.size)
-    bg.fill((0, 20, 0, 0)) # 画面の背景色
+    bg.fill((0, 20, 0)) # 画面の背景色
     screen.blit(bg, (0,0))
     pygame.display.update()
     while (1):
@@ -57,7 +57,6 @@ def main():
         # スプライトを更新
         dirty_rects = group.draw(screen)
         # updateにdirty rectを渡すとその部分だけ更新するので効率よい
-        pygame.display.update(dirty_rects)
         # 画面更新
         pygame.display.update(dirty_rects)
         # イベント処理
