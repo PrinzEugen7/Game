@@ -10,10 +10,10 @@ class Sprite(pygame.sprite.Sprite):
     # スプライトを作成(画像ファイル名, 位置(x, y), 速さ(vx, vy), 回転angle)
     def __init__(self, filename, (x, y), (vx, vy), angle=0):
         pygame.sprite.Sprite.__init__(self)
-        self.img = pygame.image.load(filename).convert_alpha()
-        if angle != 0: self.img = pygame.transform.rotate(self.img, angle)
-        w = self.img.get_width()
-        h = self.img.get_height()
+        self.image = pygame.image.load(filename).convert_alpha()
+        if angle != 0: self.img = pygame.transform.rotate(self.image, angle)
+        w = self.image.get_width()
+        h = self.image.get_height()
         self.rect = Rect(x, y, w, h)
         self.vx = vx
         self.vy = vy
