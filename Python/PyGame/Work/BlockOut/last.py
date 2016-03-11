@@ -57,13 +57,13 @@ class Ball(pygame.sprite.Sprite):
         if self.rect.top < SCREEN.top:      # 上側
             self.rect.top = SCREEN.top
             self.dy = -self.dy
-        # パドルとの反射(パドルの左端に当たったとき135度方向、右端で45度方向とし、その間は線形補間で反射方向を計算)
+        # パドルとボールの反射
         if self.rect.colliderect(self.paddle.rect) and self.dy > 0:
             self.hit = 0                                # 連続ヒットを0に戻す
             x1 = self.paddle.rect.left - self.rect.width# ボールが当たる左端
-            y1 = self.angle_left                        # 左端での反射方向（135度）
+            y1 = self.angle_left                        # 左端での反射方向(130度)
             x2 = self.paddle.rect.right                 # ボールが当たる右端
-            y2 = self.angle_right                       # 右端での反射方向（45度）
+            y2 = self.angle_right                       # 右端での反射方向(50度)
             m = float(y2-y1) / (x2-x1)                  # 直線の傾き
             x = self.rect.left                          # ボールが当たった位置
             y = m * (x - x1) + y1
