@@ -63,7 +63,7 @@ window.addEventListener('load', function() {
 		//パドル移動
 		paddle.move(system.position.x, config.canvas.height - 40);
 		//パドル当たり判定
-		if (ball.positionY >= paddle.positionY - ball.size && ball.positionY <= paddle.positionY + ball.size && ball.positionX >= paddle.positionX - (paddle.size / 2) && ball.positionX <= paddle.positionX + (paddle.size / 2)) {
+		if (ball.positionY >= paddle.y - ball.size && ball.positionY <= paddle.y + ball.size && ball.positionX >= paddle.x - (paddle.size / 2) && ball.positionX <= paddle.x + (paddle.size / 2)) {
 			ball.movingY *= -1;
 		}
 		//ボール移動テスト
@@ -148,25 +148,25 @@ function Paddle() {
 }
 Paddle.prototype = {
 	size: 0,
-	positionX: 0,
-	positionY: 0,
+	x: 0,
+	y: 0,
 	//コンストラクタ
 	initialize: function(option) { this.size = option.size; },
 	//移動
-	move: function(positionX, positionY) {
-		this.positionX = positionX;
-		this.positionY = positionY;
-		if (this.positionX < 0) {
-			this.positionX = 0;
+	move: function(x, y) {
+		this.x = x;
+		this.y = y;
+		if (this.x < 0) {
+			this.x = 0;
 		}
-		if (this.positionX > config.canvas.width) {
-			this.positionX = config.canvas.width;
+		if (this.x > config.canvas.width) {
+			this.x = config.canvas.width;
 		}
 	},
 	//描画
 	draw: function() {
 		system.context.fillStyle = '#AAAAAA';
-		system.context.fillRect(this.positionX - (this.size / 2), this.positionY, this.size, 10);
+		system.context.fillRect(this.x - (this.size / 2), this.y, this.size, 10);
 	}
 };
 
