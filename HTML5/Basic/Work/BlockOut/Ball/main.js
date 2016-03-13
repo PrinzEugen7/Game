@@ -132,14 +132,6 @@ function main() {
 		if (game.status != 'play') {
 			game.ctx.fillStyle = game.background.color;
 			game.ctx.fillRect(0, 0, game.cvs.width, game.cvs.height);
-			game.ctx.fillStyle = '#aa0000';
-			game.ctx.font = '60px "Arial Black"';
-			if (game.status == 'gameover') {
-				game.ctx.fillText('Game Over', 160, 250);
-			} 
-			else if (game.status == 'clear') {
-				game.ctx.fillText('Game Clear', 160, 250);
-			}
 			return;
 		}
 		game.time++;																// 時間加算
@@ -181,8 +173,7 @@ function main() {
 			}
 		}
 		ball.move();		// ボール移動
-		// アウト判定
-		if (ball.y >= game.cvs.height - ball.size) { game.status = 'gameover'; }
+
 		var flag = true;		// クリア判定
 		for (var i = 0; i < row; i++) {
 			for (var j = 0; j < col; j++) {
@@ -191,7 +182,6 @@ function main() {
 				}
 			}
 		}
-		if (flag) { game.status = 'clear'; }  // クリア状態に
 		paddle.draw();							//バドル描画
 		ball.draw();								//ボール描画
 		// ブロック描画
