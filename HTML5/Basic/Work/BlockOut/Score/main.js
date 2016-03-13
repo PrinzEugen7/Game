@@ -136,10 +136,12 @@ function main() {
 			game.ctx.fillStyle = '#aa0000';
 			game.ctx.font = '60px "Arial Black"';
 			if (game.status == 'gameover') {
-				game.ctx.fillText('Game Over', 160, 250);
+				game.ctx.fillText('Game Over', 160, 230);
+				game.ctx.fillText('Score : ' + game.score.point, 160, 320);
 			} 
 			else if (game.status == 'clear') {
-				game.ctx.fillText('Game Clear', 160, 250);
+				game.ctx.fillText('Game Clear', 160, 230);
+				game.ctx.fillText('Score : ' + game.score.point, 160, 320);
 			}
 			return;
 		}
