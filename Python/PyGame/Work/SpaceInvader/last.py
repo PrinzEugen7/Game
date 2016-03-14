@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 #coding: utf-8
 import pygame
 from pygame.locals import *
@@ -27,8 +28,7 @@ class Invader:
             self.key_handler()
 
     def init_game(self):
-        # ゲーム状態
-        self.game_state = START
+        self.game_state = START        # ゲーム状態
         # スプライトグループを作成して登録
         self.group = pygame.sprite.RenderUpdates()
         self.aliens = pygame.sprite.Group()  # エイリアングループ
@@ -49,17 +49,13 @@ class Invader:
             Alien((x,y))
 
     def update(self):
-        """ゲーム状態の更新"""
         if self.game_state == PLAY:
             self.group.update()
-            # ミサイルとエイリアンの衝突判定
-            self.collision_detection()
-            # エイリアンをすべて倒したらゲームオーバー
-            if len(self.aliens.sprites()) == 0:
+            self.collision_detection()            # ミサイルとエイリアンの衝突判定
+            if len(self.aliens.sprites()) == 0:            # エイリアンをすべて倒したらゲームオーバー
                 self.game_state = GAMEOVER
 
     def draw(self, screen):
-        """描画"""
         screen.fill((0, 0, 0))
         if self.game_state == START:  # スタート画面
             # タイトルを描画
@@ -73,10 +69,6 @@ class Invader:
             push_font = pygame.font.SysFont(None, 40)
             push_space = push_font.render("PUSH SPACE KEY", False, (255,255,255))
             screen.blit(push_space, ((SCREEN.width-push_space.get_width())/2, 300))
-            # クレジットを描画
-            credit_font = pygame.font.SysFont(None, 20)
-            credit = credit_font.render(u"2008 http://pygame.skr.jp", False, (255,255,255))
-            screen.blit(credit, ((SCREEN.width-credit.get_width())/2, 380))
         elif self.game_state == PLAY:  # ゲームプレイ画面
             self.group.draw(screen)
         elif self.game_state == GAMEOVER:  # ゲームオーバー画面
@@ -93,7 +85,6 @@ class Invader:
             screen.blit(push_space, ((SCREEN.width-push_space.get_width())/2, 300))
 
     def key_handler(self):
-        """キーハンドラー"""
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
@@ -102,10 +93,10 @@ class Invader:
                 pygame.quit()
                 sys.exit()
             elif event.type == KEYDOWN and event.key == K_SPACE:
-                if self.game_state == START:  # スタート画面でスペースを押したとき
+                if self.game_state == START:        # スタート画面でスペースを押したとき
                     self.game_state = PLAY
-                elif self.game_state == GAMEOVER:  # ゲームオーバー画面でスペースを押したとき
-                    self.init_game()  # ゲームを初期化して再開
+                elif self.game_state == GAMEOVER:   # ゲームオーバー画面でスペースを押したとき
+                    self.init_game()                # ゲームを初期化して再開
                     self.game_state = PLAY
 
     def collision_detection(self):
@@ -113,12 +104,12 @@ class Invader:
         alien_collided = pygame.sprite.groupcollide(self.aliens, self.shots, True, True)
         for alien in alien_collided.keys():
             Alien.kill_sound.play()
-            Explosion(alien.rect.center)  # エイリアンの中心で爆発
+            Explosion(alien.rect.center)    # エイリアンの中心で爆発
         # プレイヤーとビームの衝突判定
         beam_collided = pygame.sprite.spritecollide(self.player, self.beams, True)
-        if beam_collided:  # プレイヤーと衝突したビームがあれば
+        if beam_collided:                   # プレイヤーと衝突したビームがあれば
             Player.bomb_sound.play()
-            self.game_state = GAMEOVER  # ゲームオーバー！
+            self.game_state = GAMEOVER      # ゲームオーバー！
 
     def load_images(self):
         # スプライトの画像を登録
@@ -135,17 +126,17 @@ class Invader:
 
 # 自機
 class Player(pygame.sprite.Sprite):
-    speed = 5  # 移動速度
-    reload_time = 15  # リロード時間
+    speed = 5           # 移動速度
+    reload_time = 15    # リロード時間
+
     def __init__(self):
-        # imageとcontainersはmain()でセット
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.rect = self.image.get_rect()
-        self.rect.bottom = SCREEN.bottom  # プレイヤーが画面の一番下
+        self.rect.bottom = SCREEN.bottom            # プレイヤーが画面の一番下
         self.reload_timer = 0
+
     def update(self):
-        # 押されているキーをチェック
-        pressed_keys = pygame.key.get_pressed()
+        pressed_keys = pygame.key.get_pressed()     # 押されているキーをチェック
         # 押されているキーに応じてプレイヤーを移動
         if pressed_keys[K_LEFT]:
             self.rect.move_ip(-self.speed, 0)
@@ -156,8 +147,7 @@ class Player(pygame.sprite.Sprite):
         if pressed_keys[K_SPACE]:
             # リロード時間が0になるまで再発射できない
             if self.reload_timer > 0:
-                # リロード中
-                self.reload_timer -= 1
+                self.reload_timer -= 1  # リロード中
             else:
 
                 Player.shot_sound.play()# 発射音
@@ -166,69 +156,72 @@ class Player(pygame.sprite.Sprite):
 
 # 敵機(エイリアン)
 class Alien(pygame.sprite.Sprite):
-    speed = 2  # 移動速度
-    animcycle = 18  # アニメーション速度
+    speed = 2           # 移動速度
+    animcycle = 18      # アニメーション速度
     frame = 0
-    move_width = 230  # 横方向の移動範囲
-    prob_beam = 0.005  # ビームを発射する確率
+    move_width = 230    # 横方向の移動範囲
+    prob_beam = 0.00    # ビームを発射する確率
+
     def __init__(self, pos):
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.image = self.images[0]
         self.rect = self.image.get_rect()
         self.rect.center = pos
-        self.left = pos[0]  # 移動できる左端
-        self.right = self.left + self.move_width  # 移動できる右端
+        self.left = pos[0]                          # 移動できる左端
+        self.right = self.left + self.move_width    # 移動できる右端
+
     def update(self):
-        # 横方向への移動
-        self.rect.move_ip(self.speed, 0)
+        self.rect.move_ip(self.speed, 0)            # 横方向への移動
         if self.rect.center[0] < self.left or self.rect.center[0] > self.right:
             self.speed = -self.speed
-        # ビームを発射
         if random.random() < self.prob_beam:
-            Beam(self.rect.center)
-        # キャラクターアニメーション
+            Beam(self.rect.center)                  # ビームを発射
         self.frame += 1
         self.image = self.images[self.frame/self.animcycle%2]
 
 # 自機の攻撃
 class Shot(pygame.sprite.Sprite):
-    speed = 9  # 移動速度
+    speed = 9                               # 移動速度
     def __init__(self, pos):
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.rect = self.image.get_rect()
-        self.rect.center = pos  # 中心座標をposに
+        self.rect.center = pos              # 中心座標をposに
     def update(self):
-        self.rect.move_ip(0, -self.speed)  # 上へ移動
-        if self.rect.top < 0:  # 上端に達したら除去
+        self.rect.move_ip(0, -self.speed)   # 上へ移動
+        if self.rect.top < 0:               # 上端に達したら除去
             self.kill()
 
 # 敵機のビーム
 class Beam(pygame.sprite.Sprite):
-    speed = 5  # 移動速度
+    speed = 5                               # 移動速度
+
     def __init__(self, pos):
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.rect = self.image.get_rect()
         self.rect.center = pos
+
     def update(self):
-        self.rect.move_ip(0, self.speed)  # 下へ移動
-        if self.rect.bottom > SCREEN.height:  # 下端に達したら除去
+        self.rect.move_ip(0, self.speed)    # 下へ移動
+        if self.rect.bottom > SCREEN.height:# 下端に達したら除去
             self.kill()
 
 # 爆発
 class Explosion(pygame.sprite.Sprite):
     animcycle = 2  # アニメーション速度
     frame = 0
+
     def __init__(self, pos):
         pygame.sprite.Sprite.__init__(self, self.containers)
         self.image = self.images[0]
         self.rect = self.image.get_rect()
         self.rect.center = pos
         self.max_frame = len(self.images) * self.animcycle  # 消滅するフレーム
+
     def update(self):
         self.image = self.images[self.frame/self.animcycle]
         self.frame += 1
         if self.frame == self.max_frame:
-            self.kill()  # 消滅
+            self.kill()                                     # 消滅
 
 # 画像の分割
 def split_image(image, n):
