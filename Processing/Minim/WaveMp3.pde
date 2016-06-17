@@ -28,4 +28,4 @@ void draw(){
 void stop(){
   player.close();
   minim.stop(); 
-  
+}
