@@ -56,7 +56,7 @@ class DrawBlock{
 
 void setup(){
   size(400, 500);
-  minim = new Minim(this);              // 初期化
+  //minim = new Minim(this);              // 初期化
   //paddle_se = minim.loadFile("flashing.mp3");  // パドルにボールが衝突した時の効果音取得
   //block_se = minim.loadFile("flying_pan.mp3");  // ブロックにボールが衝突した時の効果音取得
   //gameover_se = minim.loadFile("badend1.mp3");  // ゲームオーバー時の効果音取得
