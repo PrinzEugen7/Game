@@ -94,7 +94,7 @@ void draw(){
     ball_y += vy;
   }
   
-  // ボールの処理(ブロックと衝突後)
+  // ボールの処理(壁と衝突後)
   if( ball_x > width || ball_x < 0){
     vx *= -1;
   }
