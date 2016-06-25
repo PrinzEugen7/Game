@@ -1,3 +1,7 @@
+import ddf.minim.*;  // minimライブラリのインポート
+Minim minim;         // Minim型変数であるminimの宣言
+AudioPlayer player;  // サウンドデータ格納用の変数
+
 // ブロックのパラメータ
 int blocks_row = 10;  // ブロックの行数
 int blocks_col = 11;  // ブロックの列数
@@ -30,7 +34,7 @@ float vy = -3.5;                                // ボールの速さ(y方向)
 // その他
 color back_color = color(0, 20, 0); // 背景色
 boolean start_click = false;        // クリック判定  
-
+int score = 0;                      // 得点
 // ブロック描画用クラス
 class DrawBlock{
   int x, y, w, h;
@@ -62,6 +66,9 @@ void setup(){
       block[i] = new DrawBlock(blockX[i], blockY[i], block_width, block_height, blockColor[i]);
     }
   }
+  paddle = minim.loadFile("flashing.mp3");  // パドルにボールが衝突した時の効果音取得
+  block = minim.loadFile("flying_pan.mp3");  // ブロックにボールが衝突した時の効果音取得
+  gameover = minim.loadFile("badend1.mp3");  // ゲームオーバー時の効果音取得
 }
 
 void draw(){
@@ -94,7 +101,7 @@ void draw(){
     ball_y += vy;
   }
   
-  // ボールの処理(ブロックと衝突後)
+  // ボールの処理(壁と衝突後)
   if( ball_x > width || ball_x < 0){
     vx *= -1;
   }
@@ -103,12 +110,15 @@ void draw(){
   }
   // ボールがバーより下ならゲームオーバー
   if( ball_y > height){
+    gameover.play();                        // ゲームオーバー時の効果音再生
     text("Game Over", width/2 , height/2);
+    text("Your Score:"+score, width/2 , height/2 + 30);
   }
   
   // バーにボールが衝突した場合の処理
   if(ball_x > bar_x-5 && ball_x < bar_x + bar_width + 5){
     if(ball_y > bar_y && ball_y < bar_y + 6){
+      paddle.play();                        // パドルにボールが衝突した時の効果音再生
       vx += random(-0.5,0.5);
       vy *= -1.01;
     }
@@ -122,11 +132,12 @@ void draw(){
       blockY[i] = first_block_y + block_interval_y * y;
       
       if(blockColor[i] == block_color){
-        
         if(ball_y > blockY[i]-5 && ball_y < blockY[i] + block_height+5){
           if(ball_x > blockX[i]-5 && ball_x < blockX[i] + block_width+5){
             vy *= -1;
             blockColor[i] = back_color;
+            score += 10;                          // スコア+10加点
+            block.play();                        // ブロックにボールが衝突した時の効果音再生
           }
         }
         
@@ -147,9 +158,10 @@ void draw(){
      block[i] = new DrawBlock(blockX[i], blockY[i], block_width, block_height, blockColor[i]);   
     }
   }
-  
+    text("Score:"+score, 10 ,10);  
 }
 
 void mousePressed(){
   start_click = !start_click;
 }
+
