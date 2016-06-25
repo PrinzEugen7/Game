@@ -1,6 +1,6 @@
-import ddf.minim.*;  // minimライブラリのインポート
-Minim minim;         // Minim型変数であるminimの宣言
-AudioPlayer player;  // サウンドデータ格納用の変数
+//import ddf.minim.*;  // minimライブラリのインポート
+//Minim minim;         // Minim型変数であるminimの宣言
+//AudioPlayer player;  // サウンドデータ格納用の変数
 
 // ブロックのパラメータ
 int blocks_row = 10;  // ブロックの行数
@@ -55,7 +55,11 @@ class DrawBlock{
 }
 
 void setup(){
-  size(400, 500); 
+  size(400, 500);
+  minim = new Minim(this);              // 初期化
+  //paddle_se = minim.loadFile("flashing.mp3");  // パドルにボールが衝突した時の効果音取得
+  //block_se = minim.loadFile("flying_pan.mp3");  // ブロックにボールが衝突した時の効果音取得
+  //gameover_se = minim.loadFile("badend1.mp3");  // ゲームオーバー時の効果音取得
   // ブロックの初期化
   for(int y = 0; y < blocks_row; y++){
     for(int x = 0; x < blocks_col; x++){
@@ -66,9 +70,6 @@ void setup(){
       block[i] = new DrawBlock(blockX[i], blockY[i], block_width, block_height, blockColor[i]);
     }
   }
-  paddle = minim.loadFile("flashing.mp3");  // パドルにボールが衝突した時の効果音取得
-  block = minim.loadFile("flying_pan.mp3");  // ブロックにボールが衝突した時の効果音取得
-  gameover = minim.loadFile("badend1.mp3");  // ゲームオーバー時の効果音取得
 }
 
 void draw(){
@@ -110,7 +111,7 @@ void draw(){
   }
   // ボールがバーより下ならゲームオーバー
   if( ball_y > height){
-    gameover.play();                        // ゲームオーバー時の効果音再生
+    //gameover_se.play();                        // ゲームオーバー時の効果音再生
     text("Game Over", width/2 , height/2);
     text("Your Score:"+score, width/2 , height/2 + 30);
   }
@@ -118,7 +119,7 @@ void draw(){
   // バーにボールが衝突した場合の処理
   if(ball_x > bar_x-5 && ball_x < bar_x + bar_width + 5){
     if(ball_y > bar_y && ball_y < bar_y + 6){
-      paddle.play();                        // パドルにボールが衝突した時の効果音再生
+      //paddle_se.play();                        // パドルにボールが衝突した時の効果音再生
       vx += random(-0.5,0.5);
       vy *= -1.01;
     }
@@ -137,7 +138,7 @@ void draw(){
             vy *= -1;
             blockColor[i] = back_color;
             score += 10;                          // スコア+10加点
-            block.play();                        // ブロックにボールが衝突した時の効果音再生
+            //block_se.play();                        // ブロックにボールが衝突した時の効果音再生
           }
         }
         
@@ -164,4 +165,3 @@ void draw(){
 void mousePressed(){
   start_click = !start_click;
 }
-
