@@ -8,7 +8,7 @@ int main()
     int *image;
     int x=21, y=21, gx, gy;  /*迷路の大きさとゴールの位置*/
     int hx=1,hy=1; /*主人公の位置*/
-    int i, j, flag, command;
+    int i, j, flag, cmd;
 
     clock_t start,end; /*時間計測用*/
     start = clock();   /*開始時間を記録*/
@@ -42,13 +42,18 @@ int main()
             
           }  printf("\n");
         }
-        printf("【コマンド】 2:下 4:左 6:右 8:上");
-        scanf("%d",&command);
-        if (command==0){ flag=-1; break;}
-        if (command==2 && hy<y && image[x*(hy+1)+hx]%2!=1) hy+=1;
-        if (command==8 && hy>0 && image[x*(hy-1)+hx]%2!=1) hy-=1;
-        if (command==4 && hx>0 && image[x*hy+(hx-1)]%2!=1) hx-=1;
-        if (command==6 && hx<x && image[x*hy+(hx+1)]%2!=1) hx+=1;
+        printf("【移動キー】 A:下 S:上 D:左 F:右\n");
+		printf(">");
+		// Enterキー無しの1文字入力
+        cmd = getch(); 
+		// 画面クリア
+		system("cls");
+		// キー入力に応じて自機を移動
+        if (cmd=='e'){ flag=-1; break;}
+        if (cmd=='a' && hy<y && image[x*(hy+1)+hx]%2!=1) hy+=1;
+        if (cmd=='s' && hy>0 && image[x*(hy-1)+hx]%2!=1) hy-=1;
+        if (cmd=='d' && hx>0 && image[x*hy+(hx-1)]%2!=1) hx-=1;
+        if (cmd=='f' && hx<x && image[x*hy+(hx+1)]%2!=1) hx+=1;
         // 自分の周囲だけ見えるようにする（見える壁(3)にする）
         if (image[x*(hy+1)+hx]==1) image[x*(hy+1)+hx]=3 ;
         if (image[x*(hy-1)+hx]==1) image[x*(hy-1)+hx]=3;
