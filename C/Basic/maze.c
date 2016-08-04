@@ -8,13 +8,11 @@ int main()
     int *map;
     int x=21, y=21, hx=1,hy=1, gx, gy;  // 迷路の大きさ, 主人公とゴールの位置
     int i, j, flag, cmd;
-
-    clock_t start,end; /*時間計測用*/
-    start = clock();   /*開始時間を記録*/
-    srand((unsigned)time(NULL));/*乱数の種*/
     gx;
     gy=y-2;
-
+    clock_t start,end; // 時間計測用
+    start = clock();   // 開始時間を記録
+    srand((unsigned)time(NULL));//乱数の種
     map = (int *) malloc( x*y * sizeof(int) );
     if (map==NULL){ printf("メモリ不足エラー\n"); return -1; }
 
