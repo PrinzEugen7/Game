@@ -6,16 +6,15 @@
 int main()
 {
     int *image;
-    int x, y, gx, gy;  /*迷路の大きさとゴールの位置*/
+    int x=21, y=21, gx, gy;  /*迷路の大きさとゴールの位置*/
     int hx=1,hy=1; /*主人公の位置*/
     int i, j, flag, command;
 
     clock_t start,end; /*時間計測用*/
     start = clock();   /*開始時間を記録*/
     srand((unsigned)time(NULL));/*乱数の種*/
-
-    printf("迷路の横幅[1～10]>"); scanf("%d",&x); x=x*2+1; gx=x-2;
-    printf("迷路の高さ[1～10]>"); scanf("%d",&y); y=y*2+1; gy=y-2;
+    gx;
+    gy=y-2;
 
     image = (int *) malloc( /*適当な式*/ * sizeof(/*適当な型*/) );
     if (image==NULL){ printf("メモリ不足エラー\n"); return -1; }
