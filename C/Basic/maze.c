@@ -5,9 +5,8 @@
 
 int main()
 {
-    int *image;
-    int x=21, y=21, gx, gy;  /*迷路の大きさとゴールの位置*/
-    int hx=1,hy=1; /*主人公の位置*/
+    int *map;
+    int x=21, y=21, hx=1,hy=1, gx, gy;  // 迷路の大きさ, 主人公とゴールの位置
     int i, j, flag, cmd;
 
     clock_t start,end; /*時間計測用*/
@@ -16,18 +15,18 @@ int main()
     gx;
     gy=y-2;
 
-    image = (int *) malloc( x*y * sizeof(int) );
-    if (image==NULL){ printf("メモリ不足エラー\n"); return -1; }
+    map = (int *) malloc( x*y * sizeof(int) );
+    if (map==NULL){ printf("メモリ不足エラー\n"); return -1; }
 
     // 全てを見えない壁(1)にする 
-    for (j=0; j<y; j++){ for (i=0; i<x; i++) image[x*j+i]=1; }
+    for (j=0; j<y; j++){ for (i=0; i<x; i++) map[x*j+i]=1; }
     // 奇数番地は床(0)にする
     for (j=1; j<y-1; j++){ for (i=1; i<x-1; i++) 
-        if ( i%2!=0|| j%2!=0) image[x*j+i]=0;
+        if ( i%2!=0|| j%2!=0) map[x*j+i]=0;
     }
     // 迷路生成（棒倒し法）
     for (j=2; j<y-2; j+=2){ for (i=2; i<x-2; i+=2) 
-        if ( rand()%2 ) image[x*(j+1)+i]=1; else image[x*j+i+1]=1;
+        if ( rand()%2 ) map[x*(j+1)+i]=1; else map[x*j+i+1]=1;
     }
 
     printf("迷路ゲームスタート！\n");
@@ -35,7 +34,7 @@ int main()
         // メモリ内の迷路を表示
         for (j=0; j<y; j++){ 
           for (i=0; i<x; i++){
-            if (image[x*j+i]==3) printf("#");
+            if (map[x*j+i]==3) printf("#");
             else if (i==hx && j==hy) printf("o");
                  else if (i==gx && j==gy) printf("G");
                     else printf(" ");
@@ -50,15 +49,15 @@ int main()
 		system("cls");
 		// キー入力に応じて自機を移動
         if (cmd=='e'){ flag=-1; break;}
-        if (cmd=='a' && hy<y && image[x*(hy+1)+hx]%2!=1) hy+=1;
-        if (cmd=='s' && hy>0 && image[x*(hy-1)+hx]%2!=1) hy-=1;
-        if (cmd=='d' && hx>0 && image[x*hy+(hx-1)]%2!=1) hx-=1;
-        if (cmd=='f' && hx<x && image[x*hy+(hx+1)]%2!=1) hx+=1;
+        if (cmd=='a' && hy<y && map[x*(hy+1)+hx]%2!=1) hy+=1;
+        if (cmd=='s' && hy>0 && map[x*(hy-1)+hx]%2!=1) hy-=1;
+        if (cmd=='d' && hx>0 && map[x*hy+(hx-1)]%2!=1) hx-=1;
+        if (cmd=='f' && hx<x && map[x*hy+(hx+1)]%2!=1) hx+=1;
         // 自分の周囲だけ見えるようにする（見える壁(3)にする）
-        if (image[x*(hy+1)+hx]==1) image[x*(hy+1)+hx]=3 ;
-        if (image[x*(hy-1)+hx]==1) image[x*(hy-1)+hx]=3;
-        if (image[x*hy+(hx-1)]==1) image[x*hy+(hx-1)]=3;
-        if (image[x*hy+(hx+1)]==1) image[x*hy+(hx+1)]=3;
+        if (map[x*(hy+1)+hx]==1) map[x*(hy+1)+hx]=3 ;
+        if (map[x*(hy-1)+hx]==1) map[x*(hy-1)+hx]=3;
+        if (map[x*hy+(hx-1)]==1) map[x*hy+(hx-1)]=3;
+        if (map[x*hy+(hx+1)]==1) map[x*hy+(hx+1)]=3;
         if (hx==gx && hy==gy){flag=1; break;} // ゴール到着
     }
 
@@ -71,7 +70,7 @@ int main()
     // メモリ内にある迷路をすべて表示する
     for (j=0; j<y; j++){ 
         for (i=0; i<x; i++){
-            if (image[x*j+i]%2==1) printf("#");
+            if (map[x*j+i]%2==1) printf("#");
             else if (i==hx && j==hy) printf("o");
                  else if (i==gx && j==gy) printf("G");
                     else printf(" ");
