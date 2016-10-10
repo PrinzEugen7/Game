@@ -1,34 +1,26 @@
 window.onload = function() {
-  var size = 512
-  var canvas = document.createElement('canvas');
-  canvas.width = size;
-  canvas.height = size;
-  canvas.style.border = 'solid black 1px';
-
-  document.body.appendChild(canvas);
-
-  var mmd = new MMD(canvas, canvas.width, canvas.height);
+  var cvs = document.createElement('canvas');
+  // 画面サイズ
+  cvs.width = 640;
+  cvs.height = 480;
+  document.body.appendChild(cvs);
+  var mmd = new MMD(cvs, cvs.width, cvs.height);
   mmd.initShaders();
   mmd.initParameters();
   mmd.registerKeyListener(document);
   mmd.registerMouseListener(document);
-
-  var miku = new MMD.Model('model', 'Miku_Hatsune_Ver2.pmd');
-  //var miku = new MMD.Model('Lat', 'Normal.pmd');
-  //var miku = new MMD.Model('mobko', 'mobko.pmd');
-  //var miku = new MMD.Model('yufu', 'yufu.pmd');
-  //var miku = new MMD.Model('defoko', 'defoko.pmd');
-  miku.load(function() {
-    mmd.addModel(miku);
+  // 使用するMMDモデルの選択
+  var model = new MMD.Model('model', 'Mk-II[T].pmd');
+  // MMDモデルのロード
+  model.load(function() {
+    mmd.addModel(model);
     mmd.initBuffers();
     mmd.start();
-
+	// モーションの設定
     var dance = new MMD.Motion('motion/kishimen.vmd');
     dance.load(function() {
-      mmd.addModelMotion(miku, dance, true);
-
+      mmd.addModelMotion(model, dance, true);
       mmd.play()
-
       setInterval(function() {
         console.log('fps = ' + mmd.realFps);
       }, 1000);
