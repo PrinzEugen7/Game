@@ -1,0 +1,18 @@
+body{
+  background: #222;
+}
+
+div#blockout{
+  margin:1em;
+  padding:0em;
+  color:#eee;
+  background: #000;
+  width:150px;
+  height:240px;
+  margin-left :auto;
+  margin-right:auto;
+  position:relative;
+  font-size:10px;
+  text-align:left;
+  cursor:crosshair;
+}
